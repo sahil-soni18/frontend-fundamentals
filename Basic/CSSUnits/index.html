@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Units: Complete Guide</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            color: #3498db;
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        h3 {
+            color: #2c3e50;
+            margin: 20px 0 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .theory {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .examples {
+            flex: 2;
+            min-width: 500px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .unit-card {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+        }
+        
+        .unit-card h3 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .unit-type {
+            font-size: 0.8em;
+            color: #7f8c8d;
+            font-weight: normal;
+            background: #e0e7ff;
+            padding: 3px 10px;
+            border-radius: 15px;
+        }
+        
+        .demo-box {
+            height: 40px;
+            background: #3498db;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .interactive-demo {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .control-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+        }
+        
+        .value-display {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            text-align: center;
+            margin-top: 5px;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .comparison-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e1e4e8;
+        }
+        
+        .size-display {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+            margin: 10px 0;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (max-width: 850px) {
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CSS Units: Complete Guide</h1>
+        <p>Understanding absolute, relative, and viewport units in CSS</p>
+    </header>
+    
+    <div class="container">
+        <div class="theory">
+            <h2>Understanding CSS Units</h2>
+            
+            <h3>Why Units Matter</h3>
+            <p>CSS units define the size and measurement of elements on a web page. Choosing the right unit is crucial for creating responsive, accessible, and maintainable designs.</p>
+            
+            <h3>Unit Categories</h3>
+            <p>CSS units fall into three main categories:</p>
+            <ul>
+                <li><strong>Absolute Units</strong> - Fixed sizes that don't change</li>
+                <li><strong>Relative Units</strong> - Sizes relative to another value</li>
+                <li><strong>Viewport Units</strong> - Sizes relative to the viewport dimensions</li>
+            </ul>
+            
+            <h3>Key Concepts</h3>
+            <p><strong>em</strong> - Relative to the font-size of the element</p>
+            <p><strong>rem</strong> - Relative to the font-size of the root element</p>
+            <p><strong>%</strong> - Relative to the parent element</p>
+            <p><strong>vw/vh</strong> - Relative to 1% of the viewport's width/height</p>
+            
+            <div class="interactive-demo">
+                <h3>Root Font Size</h3>
+                <p>The root font size (typically 16px) is the baseline for rem units</p>
+                <div class="control-group">
+                    <label for="rootFontSize">Adjust Root Font Size: <output id="rootValue">16</output>px</label>
+                    <input type="range" id="rootFontSize" min="12" max="24" value="16">
+                </div>
+            </div>
+        </div>
+        
+        <div class="examples">
+            <h2>CSS Units in Action</h2>
+            
+            <div class="unit-card">
+                <h3>Pixels (px) <span class="unit-type">Absolute</span></h3>
+                <p>1px is exactly 1/96th of 1 inch. Fixed size regardless of other settings.</p>
+                <div class="demo-box" style="width: 200px;">200px</div>
+            </div>
+            
+            <div class="unit-card">
+                <h3>Ems (em) <span class="unit-type">Relative</span></h3>
+                <p>Relative to the font size of the element. 2em means 2 times the current font size.</p>
+                <div class="demo-box" style="width: 15em; font-size: 12px;">15em (based on 12px font)</div>
+            </div>
+            
+            <div class="unit-card">
+                <h3>Rems (rem) <span class="unit-type">Relative</span></h3>
+                <p>Relative to the root element's font size. 2rem means 2 times the root font size.</p>
+                <div class="demo-box" style="width: 15rem;">15rem</div>
+            </div>
+            
+            <div class="unit-card">
+                <h3>Percentages (%) <span class="unit-type">Relative</span></h3>
+                <p>Relative to the parent element's dimensions. 50% means half the size of the parent.</p>
+                <div style="width: 400px; background: #e0e7ff; padding: 10px;">
+                    <div class="demo-box" style="width: 50%;">50% of parent</div>
+                </div>
+            </div>
+            
+            <div class="unit-card">
+                <h3>Viewport Width (vw) <span class="unit-type">Viewport</span></h3>
+                <p>Relative to 1% of the viewport's width. 50vw means 50% of the viewport width.</p>
+                <div class="demo-box" style="width: 50vw;">50vw</div>
+            </div>
+            
+            <div class="unit-card">
+                <h3>Viewport Height (vh) <span class="unit-type">Viewport</span></h3>
+                <p>Relative to 1% of the viewport's height. 20vh means 20% of the viewport height.</p>
+                <div class="demo-box" style="width: 300px; height: 20vh;">20vh height</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="comparison">
+        <div class="comparison-card">
+            <h3>Pixel vs REM Comparison</h3>
+            <div class="size-display" id="pixelSize">16px</div>
+            <p>Font size set in pixels remains fixed</p>
+        </div>
+        
+        <div class="comparison-card">
+            <h3>REM Scaling</h3>
+            <div class="size-display" id="remSize">1rem</div>
+            <p>Font size in rems scales with root font size</p>
+        </div>
+        
+        <div class="comparison-card">
+            <h3>EM vs REM</h3>
+            <div class="size-display" id="emSize">1em</div>
+            <p>EM units are relative to parent font size</p>
+        </div>
+    </div>
+    
+    <div class="interactive-demo">
+        <h2>Interactive Unit Comparison</h2>
+        <p>Adjust the slider to see how different units respond to changes in root font size</p>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="pixelSlider">Pixel Value: <output id="pixelValue">16</output>px</label>
+                <input type="range" id="pixelSlider" min="8" max="32" value="16">
+            </div>
+            
+            <div class="control-group">
+                <label for="emSlider">EM Value: <output id="emValue">1</output>em</label>
+                <input type="range" id="emSlider" min="0.5" max="3" step="0.1" value="1">
+            </div>
+            
+            <div class="control-group">
+                <label for="remSlider">REM Value: <output id="remValue">1</output>rem</label>
+                <input type="range" id="remSlider" min="0.5" max="3" step="0.1" value="1">
+            </div>
+        </div>
+        
+        <div style="display: flex; gap: 20px; margin-top: 30px;">
+            <div style="flex: 1; padding: 20px; background: #e0e7ff; border-radius: 8px;">
+                <div style="font-size: 16px;" id="pixelExample">
+                    This text is set to <span id="currentPixel">16</span>px. It won't change with root font size adjustments.
+                </div>
+            </div>
+            
+            <div style="flex: 1; padding: 20px; background: #ffe0e0; border-radius: 8px;">
+                <div id="remExample">
+                    This text is set to <span id="currentRem">1</span>rem. It will change with root font size.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>CSS Units Guide &copy; 2023 | Created for educational purposes</p>
+        <p>Remember: Use relative units for responsive design and accessibility!</p>
+    </footer>
+
+    <script>
+        // Update root font size
+        const rootFontSize = document.getElementById('rootFontSize');
+        const rootValue = document.getElementById('rootValue');
+        
+        rootFontSize.addEventListener('input', function() {
+            const value = this.value;
+            rootValue.textContent = value;
+            document.documentElement.style.fontSize = value + 'px';
+            
+            // Update comparison displays
+            document.getElementById('remSize').textContent = value + 'px (1rem)';
+            document.getElementById('pixelSize').textContent = '16px';
+            document.getElementById('emSize').textContent = '16px (1em)';
+        });
+        
+        // Update interactive sliders
+        const pixelSlider = document.getElementById('pixelSlider');
+        const pixelValue = document.getElementById('pixelValue');
+        const currentPixel = document.getElementById('currentPixel');
+        
+        pixelSlider.addEventListener('input', function() {
+            const value = this.value;
+            pixelValue.textContent = value;
+            currentPixel.textContent = value;
+            document.getElementById('pixelExample').style.fontSize = value + 'px';
+        });
+        
+        const emSlider = document.getElementById('emSlider');
+        const emValue = document.getElementById('emValue');
+        
+        emSlider.addEventListener('input', function() {
+            const value = this.value;
+            emValue.textContent = value;
+        });
+        
+        const remSlider = document.getElementById('remSlider');
+        const remValue = document.getElementById('remValue');
+        const currentRem = document.getElementById('currentRem');
+        
+        remSlider.addEventListener('input', function() {
+            const value = this.value;
+            remValue.textContent = value;
+            currentRem.textContent = value;
+            document.getElementById('remExample').style.fontSize = value + 'rem';
+        });
+    </script>
+</body>
+</html>

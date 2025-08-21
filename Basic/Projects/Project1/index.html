@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Pricing Table</title>
+    <style>
+        :root {
+            /* Color Variables */
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #f72585;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --light-text: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            
+            /* Font Variables */
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.25rem;
+            --font-size-xl: 1.5rem;
+            --font-size-xxl: 2rem;
+            
+            /* Spacing Variables */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+            padding: var(--spacing-md);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        h1 {
+            font-size: var(--font-size-xxl);
+            color: var(--secondary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--dark-text);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .pricing-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--spacing-md);
+        }
+
+        .pricing-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            padding: var(--spacing-lg);
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px var(--shadow-color);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--accent-color);
+            position: relative;
+        }
+
+        .popular-tag {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: var(--light-text);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 20px;
+            font-size: var(--font-size-sm);
+            font-weight: bold;
+        }
+
+        .plan-name {
+            font-size: var(--font-size-xl);
+            color: var(--secondary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .plan-price {
+            font-size: var(--font-size-xxl);
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .plan-duration {
+            color: var(--dark-text);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .plan-features {
+            margin-bottom: var(--spacing-md);
+            flex-grow: 1;
+        }
+
+        .feature {
+            padding: var(--spacing-xs) 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature::before {
+            content: "✓";
+            color: var(--primary-color);
+            margin-right: var(--spacing-xs);
+            font-weight: bold;
+        }
+
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: var(--spacing-sm);
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            border: none;
+            border-radius: 5px;
+            font-size: var(--font-size-base);
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .popular .cta-button {
+            background-color: var(--accent-color);
+        }
+
+        .popular .cta-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        footer {
+            margin-top: var(--spacing-xl);
+            text-align: center;
+            font-size: var(--font-size-sm);
+            color: var(--dark-text);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            :root {
+                --font-size-xxl: 1.75rem;
+                --font-size-xl: 1.25rem;
+                --font-size-lg: 1.1rem;
+            }
+            
+            .pricing-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .pricing-card {
+                width: 100%;
+                max-width: 400px;
+                margin-bottom: var(--spacing-md);
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --spacing-lg: 1.5rem;
+                --spacing-xl: 2rem;
+            }
+            
+            body {
+                padding: var(--spacing-sm);
+            }
+            
+            .container {
+                padding: var(--spacing-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Choose Your Plan</h1>
+            <p class="subtitle">Select the perfect plan for your needs with our flexible pricing options</p>
+        </header>
+        
+        <div class="pricing-container">
+            <div class="pricing-card">
+                <h2 class="plan-name">Basic</h2>
+                <div class="plan-price">$9.99</div>
+                <div class="plan-duration">per month</div>
+                <ul class="plan-features">
+                    <li class="feature">10GB Storage</li>
+                    <li class="feature">1 User</li>
+                    <li class="feature">Basic Support</li>
+                    <li class="feature">Email Assistance</li>
+                    <li class="feature">Limited Access</li>
+                </ul>
+                <a href="#" class="cta-button">Get Started</a>
+            </div>
+            
+            <div class="pricing-card popular">
+                <div class="popular-tag">Most Popular</div>
+                <h2 class="plan-name">Professional</h2>
+                <div class="plan-price">$19.99</div>
+                <div class="plan-duration">per month</div>
+                <ul class="plan-features">
+                    <li class="feature">50GB Storage</li>
+                    <li class="feature">5 Users</li>
+                    <li class="feature">Priority Support</li>
+                    <li class="feature">24/7 Assistance</li>
+                    <li class="feature">Full Access</li>
+                </ul>
+                <a href="#" class="cta-button">Get Started</a>
+            </div>
+            
+            <div class="pricing-card">
+                <h2 class="plan-name">Enterprise</h2>
+                <div class="plan-price">$49.99</div>
+                <div class="plan-duration">per month</div>
+                <ul class="plan-features">
+                    <li class="feature">Unlimited Storage</li>
+                    <li class="feature">Unlimited Users</li>
+                    <li class="feature">24/7 Premium Support</li>
+                    <li class="feature">Dedicated Manager</li>
+                    <li class="feature">Custom Solutions</li>
+                </ul>
+                <a href="#" class="cta-button">Get Started</a>
+            </div>
+        </div>
+        
+        <footer>
+            <p>All plans come with a 30-day money-back guarantee. No credit card required.</p>
+        </footer>
+    </div>
+</body>
+</html>

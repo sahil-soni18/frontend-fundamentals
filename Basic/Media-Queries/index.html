@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            padding: 0 15px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: #333;
+            color: white;
+            padding: 1rem;
+        }
+        
+        .nav {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem;
+            border-bottom: 1px solid #555;
+        }
+        
+        .main {
+            padding: 2rem 0;
+        }
+        
+        .grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: 1fr;
+        }
+        
+        .card {
+            background: #f4f4f4;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+        
+        /* Tablet */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 720px;
+            }
+            
+            .nav {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            
+            .nav a {
+                border-bottom: none;
+            }
+            
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Desktop */
+        @media (min-width: 992px) {
+            .container {
+                max-width: 960px;
+            }
+            
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        /* Large Desktop */
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1140px;
+            }
+            
+            .grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Contact</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="main">
+        <div class="container">
+            <div class="grid">
+                <div class="card">Card 1</div>
+                <div class="card">Card 2</div>
+                <div class="card">Card 3</div>
+                <div class="card">Card 4</div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 My Website</p>
+        </div>
+    </footer>
+</body>
+</html>

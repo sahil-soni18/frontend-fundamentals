@@ -1,0 +1,18 @@
+p {
+    border: 4px dotted black;
+    text-align: center;
+    line-height: 80px;
+    letter-spacing: 5px;
+    font-size: 2em;
+    font-weight: bold;
+    word-spacing: 40px;
+    text-decoration: line-through;
+    text-overflow: ellipsis;
+    text-shadow: 4px 4px 0px gray;
+}
+
+body {
+    /* background: linear-gradient(to right, purple 0%, blue 65%, yellow 80%); */
+    background: radial-gradient(circle at center, lightblue, aquamarine, pink);
+    /* background: conic-gradient(from 45deg, red, yellow, blue); */
+}

@@ -1,0 +1,23 @@
+:root {
+    --background-color: black;
+    --color: white;
+}
+
+body {
+    --color: green;
+    background-color: var(--background-color);
+    color: var(--color);
+}
+
+.container {
+    --color: blue;
+    /* color: var(--color); */
+}
+
+.para {
+    
+    color: var(--color);
+}
+/* p {
+    color: var(--color);
+} */

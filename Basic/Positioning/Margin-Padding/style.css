@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.CenteringDiv {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    background-color: antiquewhite;
+}
+
+.parent { margin-top: 20px; } /* may collapse with child */
+.child  { margin-top: 30px; }
+
+button {
+    width: 100px;
+    height: 50px;
+    padding: 40;
+}
+
+div {
+    margin: 10px;
+    border: 2px groove whitesmoke;
+}
+
+
+.box {
+  background-color: lightblue;
+  padding: 20px;
+  border: 2px solid navy;
+  width: 200px;
+}
+
+.box-border-box {
+  background-color: peachpuff;
+  padding: 20px;
+  border: 2px solid brown;
+  width: 200px;
+  box-sizing: border-box;
+}

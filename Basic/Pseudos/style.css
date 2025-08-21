@@ -1,0 +1,44 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: blue;
+}
+
+p {
+    color: darkgray;
+    font-size: 20px;
+}
+
+.DivClass ~ h2 {
+    color: purple;
+}
+
+li:first-child {
+    color: red;
+}
+
+/* First letter of the last li */
+li:last-child::first-letter {
+  color: rgb(189, 32, 84);
+}
+
+/* Add ✅ after last li */
+li:last-child::after {
+  content: "✅";
+}
+
+
+li:nth-child(2)::before {
+    color: rgb(21, 163, 199);
+    content: "🔥";
+}
+
+ul::selection {
+    color: green;
+    background-color: black;
+}

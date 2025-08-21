@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Box-shadow vs Drop-shadow Demo</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    padding: 2em;
+    background: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    gap: 3em;
+  }
+  .container {
+    text-align: center;
+  }
+  img {
+    width: 200px;
+  }
+  .box-shadow {
+    box-shadow: 10px 10px 20px rgba(0,0,0,0.5);
+    border-radius: 20px; /* to show rounded box shadow */
+  }
+  .drop-shadow {
+    filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.5));
+  }
+  h2 {
+    margin-bottom: 1em;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h2>box-shadow</h2>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/220px-PNG_transparency_demonstration_1.png" 
+         alt="Transparent sample" class="box-shadow" />
+    <p>Shadow around rectangular box</p>
+  </div>
+
+  <div class="container">
+    <h2>drop-shadow()</h2>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG_transparency_demonstration_1.png/220px-PNG_transparency_demonstration_1.png" 
+         alt="Transparent sample" class="drop-shadow" />
+    <p>Shadow matches visible shape</p>
+  </div>
+</body>
+</html>

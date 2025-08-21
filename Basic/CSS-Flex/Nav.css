@@ -1,0 +1,43 @@
+header {
+  background-color: azure;
+  padding: 10px 0;
+}
+
+/* Use flex to center the nav horizontally */
+nav {
+  display: flex;
+  justify-content: center;
+}
+
+/* Remove bullet points and default padding/margin */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;    
+  color: blueviolet;     
+  gap: 20px;              /* space between items */
+}
+
+/* Style for the list items */
+ul li {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 8px 12px;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect */
+ul li:hover {
+  background-color: #ddd;
+  border-radius: 4px;
+}
+
+
+@media screen and (max-width: 550px) {
+    ul {
+        flex-direction: column;
+        gap: 0px;
+    }
+}
