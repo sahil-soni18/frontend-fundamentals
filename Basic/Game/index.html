@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gravity Bender</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            background: #121212;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+        }
+        h1 {
+            color: #0ff;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px #0ff;
+        }
+        #gameContainer {
+            position: relative;
+        }
+        #gameCanvas {
+            background: #222;
+            border: 2px solid #0ff;
+            box-shadow: 0 0 20px #0ff;
+            margin-top: 10px;
+        }
+        #flipsCounter {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #0ff;
+        }
+        #levelInfo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #0ff;
+        }
+        #restartBtn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #0ff;
+            border: none;
+            border-radius: 5px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        #restartBtn:hover {
+            background: #ff0;
+            box-shadow: 0 0 15px #ff0;
+        }
+        .instructions {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #aaa;
+            max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <h1>GRAVITY BENDER</h1>
+    <div class="instructions">
+        <p>Press SPACE or CLICK to reverse gravity! Reach the green portal.</p>
+        <p>Avoid red obstacles. Flips remaining: <span id="flipsDisplay">3</span></p>
+    </div>
+
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="500" height="400"></canvas>
+        <div id="levelInfo">Level: 1</div>
+        <div id="flipsCounter">Flips: 3</div>
+    </div>
+    
+    <button id="restartBtn">RESTART LEVEL</button>
+
+    <script>
+        // Game setup
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const flipsDisplay = document.getElementById('flipsDisplay');
+        const flipsCounter = document.getElementById('flipsCounter');
+        const levelInfo = document.getElementById('levelInfo');
+        const restartBtn = document.getElementById('restartBtn');
+
+        // Game variables
+        let gravity = 1; // 1 = down, -1 = up
+        let flipsRemaining = 3;
+        let level = 1;
+        let gameState = 'playing'; // playing, won, lost
+
+        // Player object
+        const player = {
+            x: 50,
+            y: 50,
+            size: 30,
+            color: '#0ff',
+            velocity: 0,
+            speed: 0.5,
+            jumpStrength: 12,
+            onGround: false,
+            update: function() {
+                // Apply gravity
+                this.velocity += gravity * this.speed;
+                this.y += this.velocity;
+
+                // Floor and ceiling collision
+                if (this.y > canvas.height - this.size) {
+                    this.y = canvas.height - this.size;
+                    this.velocity = 0;
+                    this.onGround = true;
+                } else if (this.y < 0) {
+                    this.y = 0;
+                    this.velocity = 0;
+                }
+
+                // Check obstacle collisions
+                obstacles.forEach(obstacle => {
+                    if (isColliding(this, obstacle)) {
+                        gameState = 'lost';
+                    }
+                });
+
+                // Check win condition
+                if (isColliding(this, goal)) {
+                    gameState = 'won';
+                }
+            },
+            draw: function() {
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+                // Add a cool glow
+                ctx.shadowBlur = 20;
+                ctx.shadowColor = this.color;
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+                ctx.shadowBlur = 0;
+            },
+            jump: function() {
+                if (this.onGround) {
+                    this.velocity = -this.jumpStrength * gravity;
+                    this.onGround = false;
+                }
+            }
+        };
+
+        // Goal portal
+        const goal = {
+            x: canvas.width - 80,
+            y: canvas.height - 60,
+            width: 40,
+            height: 40,
+            color: '#0f0',
+            draw: function() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x + this.width/2, this.y + this.height/2, this.width/2, 0, Math.PI * 2);
+                ctx.fill();
+                // Swirling effect
+                ctx.strokeStyle = 'white';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(this.x + this.width/2, this.y + this.height/2, this.width/2.5, 0, Math.PI * 1.5);
+                ctx.stroke();
+            }
+        };
+
+        // Obstacles - different types for variety
+        let obstacles = [];
+
+        // Initialize level
+        function initLevel() {
+            obstacles = [];
+            player.x = 50;
+            player.y = gravity === 1 ? 50 : canvas.height - 50 - player.size;
+            player.velocity = 0;
+            gameState = 'playing';
+
+            // Different obstacles for different levels
+            if (level === 1) {
+                obstacles = [
+                    { x: 200, y: 300, width: 100, height: 20, color: '#f00' },
+                    { x: 350, y: 200, width: 100, height: 20, color: '#f00' },
+                    { x: 150, y: 100, width: 100, height: 20, color: '#f00' }
+                ];
+                flipsRemaining = 3;
+            } else if (level === 2) {
+                obstacles = [
+                    { x: 150, y: 350, width: 80, height: 20, color: '#f00' },
+                    { x: 250, y: 250, width: 80, height: 20, color: '#f00' },
+                    { x: 350, y: 150, width: 80, height: 20, color: '#f00' },
+                    { x: 200, y: 50, width: 100, height: 20, color: '#f00' }
+                ];
+                flipsRemaining = 4;
+            } else {
+                // Random obstacles for higher levels
+                for (let i = 0; i < level + 2; i++) {
+                    obstacles.push({
+                        x: Math.random() * (canvas.width - 100),
+                        y: Math.random() * (canvas.height - 100),
+                        width: 60 + Math.random() * 60,
+                        height: 20,
+                        color: '#f00'
+                    });
+                }
+                flipsRemaining = level + 2;
+            }
+
+            // Position goal based on gravity
+            goal.y = gravity === 1 ? canvas.height - 60 : 20;
+            updateDisplays();
+        }
+
+        // Helper functions
+        function isColliding(obj1, obj2) {
+            return obj1.x < obj2.x + obj2.width &&
+                   obj1.x + obj1.size > obj2.x &&
+                   obj1.y < obj2.y + obj2.height &&
+                   obj1.y + obj1.size > obj2.y;
+        }
+
+        function updateDisplays() {
+            flipsDisplay.textContent = flipsRemaining;
+            flipsCounter.textContent = `Flips: ${flipsRemaining}`;
+            levelInfo.textContent = `Level: ${level}`;
+        }
+
+        function reverseGravity() {
+            if (flipsRemaining > 0 && gameState === 'playing') {
+                gravity *= -1;
+                flipsRemaining--;
+                player.color = gravity === 1 ? '#0ff' : '#ff0';
+                updateDisplays();
+                
+                // Visual effect
+                canvas.style.boxShadow = gravity === 1 ? '0 0 20px #0ff' : '0 0 20px #ff0';
+                setTimeout(() => {
+                    canvas.style.boxShadow = gravity === 1 ? '0 0 20px #0ff' : '0 0 20px #ff0';
+                }, 200);
+            }
+        }
+
+        // Draw everything
+        function draw() {
+            // Clear canvas
+            ctx.fillStyle = '#222';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw obstacles
+            obstacles.forEach(obstacle => {
+                ctx.fillStyle = obstacle.color;
+                ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+            });
+
+            // Draw goal
+            goal.draw();
+
+            // Draw player
+            player.draw();
+
+            // Draw game state message
+            if (gameState === 'won') {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#0f0';
+                ctx.font = '36px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('LEVEL COMPLETE!', canvas.width/2, canvas.height/2);
+                ctx.font = '20px Arial';
+                ctx.fillText('Click to continue', canvas.width/2, canvas.height/2 + 40);
+            } else if (gameState === 'lost') {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#f00';
+                ctx.font = '36px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('GAME OVER', canvas.width/2, canvas.height/2);
+                ctx.font = '20px Arial';
+                ctx.fillText('Click to try again', canvas.width/2, canvas.height/2 + 40);
+            }
+        }
+
+        // Game loop
+        function gameLoop() {
+            if (gameState === 'playing') {
+                player.update();
+            }
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Input handling
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                reverseGravity();
+            }
+        });
+
+        canvas.addEventListener('click', () => {
+            if (gameState === 'playing') {
+                reverseGravity();
+            } else if (gameState === 'won') {
+                level++;
+                initLevel();
+            } else if (gameState === 'lost') {
+                initLevel();
+            }
+        });
+
+        restartBtn.addEventListener('click', initLevel);
+
+        // Start the game
+        initLevel();
+        gameLoop();
+    </script>
+</body>
+</html>
